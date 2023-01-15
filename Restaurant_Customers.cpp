@@ -16,6 +16,7 @@ using namespace std;
 #define pb             push_back
 #define si             set <int>
 #define msi            multiset<int>
+#define vi             vector <int>
 #define pi             pair <int, int>
 #define vpi            vector <pi>
 #define vsi            vector <si>
@@ -69,30 +70,32 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 
 
 
- #define int long long
+// #define int long long
 
-#define vi             vector <int>
 
 
 
 void __solve() {
-
 int n; cin >> n;
-vi arr(n);
-for(int i = 0; i < n; i++) cin >> arr[i];
 
-
-vi dp(n);
-
-dp[0] = arr[0];
-
-for(int i = 1; i < n; i++) {
-dp[i] = max(arr[i], arr[i] + dp[i-1]);
+map<int, int> cust_history;
+vector<pair<int, int>> rc;
+for(int i = 0; i < n; i++) {
+  int x, y; cin >> x >> y;
+rc.pb({x, y});
+}
+for(auto&c : rc) {
+  cust_history[c.F]++;
+  cust_history[c.S]--;
 }
 
-cout << *max_element(all(dp)) << nline;
-
-
+int curr_c = 0;
+int max_c = 0;
+for(auto&h: cust_history) {
+  curr_c += h.S;
+  max_c = max(max_c, curr_c);
+}
+cout << max_c;
 }
 
 int32_t main() {

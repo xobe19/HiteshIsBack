@@ -16,6 +16,7 @@ using namespace std;
 #define pb             push_back
 #define si             set <int>
 #define msi            multiset<int>
+#define vi             vector <int>
 #define pi             pair <int, int>
 #define vpi            vector <pi>
 #define vsi            vector <si>
@@ -69,29 +70,40 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 
 
 
- #define int long long
+// #define int long long
 
-#define vi             vector <int>
 
 
 
 void __solve() {
 
-int n; cin >> n;
-vi arr(n);
-for(int i = 0; i < n; i++) cin >> arr[i];
+int n,m; cin >> n >> m;
+vi cus(m);
 
 
-vi dp(n);
+multiset<int> ticks;
+for(int i = 0; i < n; i++) {
 
-dp[0] = arr[0];
-
-for(int i = 1; i < n; i++) {
-dp[i] = max(arr[i], arr[i] + dp[i-1]);
+int t; cin >> t;
+ticks.insert(t);
 }
 
-cout << *max_element(all(dp)) << nline;
+for(int i = 0; i < m; i++) cin >> cus[i];
 
+
+for(int& c: cus) {
+  auto found = ticks.upper_bound(c);
+  if(found != ticks.begin()) {
+    found--;
+  }
+  else {
+    cout << "-1\n";
+    continue;
+  }
+    cout << *found << nline;
+    ticks.erase(found);
+  
+}
 
 }
 

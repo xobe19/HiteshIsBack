@@ -71,8 +71,8 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 
  #define int long long
 
-#define vi             vector <int>
 
+#define vi             vector <int>
 
 
 void __solve() {
@@ -80,18 +80,14 @@ void __solve() {
 int n; cin >> n;
 vi arr(n);
 for(int i = 0; i < n; i++) cin >> arr[i];
-
-
-vi dp(n);
-
-dp[0] = arr[0];
-
-for(int i = 1; i < n; i++) {
-dp[i] = max(arr[i], arr[i] + dp[i-1]);
+sort(all(arr));
+int med;
+  med = arr[(sz(arr)-1)/2];
+int ans = 0;
+for(int i =0 ; i < n ; i++) {
+  ans += abs(arr[i] - med);
 }
-
-cout << *max_element(all(dp)) << nline;
-
+cout << ans;
 
 }
 

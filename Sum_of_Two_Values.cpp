@@ -16,6 +16,7 @@ using namespace std;
 #define pb             push_back
 #define si             set <int>
 #define msi            multiset<int>
+#define vi             vector <int>
 #define pi             pair <int, int>
 #define vpi            vector <pi>
 #define vsi            vector <si>
@@ -69,28 +70,46 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 
 
 
- #define int long long
+// #define int long long
 
-#define vi             vector <int>
 
 
 
 void __solve() {
 
 int n; cin >> n;
+int x; cin >> x;
+bool couted = false;
+multiset<pair<int, int>> eles;
 vi arr(n);
-for(int i = 0; i < n; i++) cin >> arr[i];
+for(int i = 0; i < n; i++)  {
+ int t; cin >> t;
+ eles.insert({t, i});
+ arr[i] = t;
+}
+debug(eles);
+for(int i = 0; i < n;i++) {
+  int elem = arr[i];
+  int indx = i;
+  eles.erase({elem, indx});
+  if(eles.empty()) {
 
-
-vi dp(n);
-
-dp[0] = arr[0];
-
-for(int i = 1; i < n; i++) {
-dp[i] = max(arr[i], arr[i] + dp[i-1]);
+  eles.insert({elem, indx});
+  continue;
+  }
+  auto found = eles.lower_bound({x-elem, 0});
+  if((*found).F == x-elem) {
+    couted = true;
+    cout << indx+1 << " " <<(*found).S+1 ;
+    return;
+  }
+  eles.insert({elem, indx});
 }
 
-cout << *max_element(all(dp)) << nline;
+if(!couted) {
+  cout << "IMPOSSIBLE";
+}
+
 
 
 }
