@@ -16,7 +16,6 @@ using namespace std;
 #define pb             push_back
 #define si             set <int>
 #define msi            multiset<int>
-#define vi             vector <int>
 #define pi             pair <int, int>
 #define vpi            vector <pi>
 #define vsi            vector <si>
@@ -70,29 +69,35 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 
 
 
-// #define int long long
+ #define int long long
 
+#define vi             vector <int>
 
 
 
 void __solve() {
-
 int n; cin >> n;
 vi arr(n);
-for(int i =0 ;i  < n; i++) cin >> arr[i];
-
+for(int i =0 ; i < n; i++) cin >> arr[i];
 sort(all(arr));
-int st = 0;
-int en = 0;
-int to_search = 1;
-int csum = arr[0];
-while(st <= en && en < n) {
-if(csum <= to_search) {
-  to_search++;
+vi dp(n);
+
+dp[0] = arr[0] == 1 ? 2 : 1;
+
+for(int i = 1; i < n; i++) {
+
+// 1..mbs tak dp handle karleta
+if(arr[i] > dp[i-1]) {
+  dp[i] = dp[i-1];
 }
+else {
+  dp[i] = dp[i-1] + arr[i];
 }
 
 
+}
+debug(dp);
+cout << dp[n-1];
 }
 
 int32_t main() {
